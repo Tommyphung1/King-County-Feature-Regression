@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import statistics as stats
+import statsmodels.api as sm
 import matplotlib.pyplot as plt
 import scipy
 
@@ -49,7 +49,7 @@ def correlation_with(dataframe, column):
     """
     df_cc = zip(dataframe.corrwith(dataframe[column]).index, dataframe.corrwith(dataframe[column]).values)
     best_pairs = {x:y for x, y in df_cc if (y > 0) and (y < 1)}
-    best_pairs = sorted(best_pairs.items(), key = lambda x: x[1])
+    best_pairs = sorted(best_pairs.items(), key = lambda x: x[1], reverse = True)
     
     return best_pairs
 
@@ -65,7 +65,7 @@ def create_model(dataframe, x_list, y):
     y = dataframe[y]
     model = sm.OLS(y, sm.add_constant(X))
     results = model.fit()
-    return results
+
     return model, results
 
 def seperate_dataframe(dataframe):

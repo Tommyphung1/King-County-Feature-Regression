@@ -3,7 +3,6 @@ import numpy as np
 import statistics as stats
 import matplotlib.pyplot as plt
 import scipy
-import data_preperation as dp
 
 def look_dataframe(data):
     """
