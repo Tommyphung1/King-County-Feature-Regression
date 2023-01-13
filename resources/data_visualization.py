@@ -10,6 +10,7 @@ def dataframe_plot(dim = 1, title = None):
     Output: Return the ax for plotting
     """
     fig, ax = plt.subplots(dim)
+    
    
     return fig, ax
     

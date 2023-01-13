@@ -40,9 +40,17 @@ def look_columns(data, columns):
     if type(columns) != list:
         columns = [columns]
     display(data[columns].head())
+    display(data[columns].info())
     for column in columns:
         if(len(data[column].unique()) == len(data)):
             print('{} has all unique observations. '.format(column))
         else:
             print('{} has {}/{} unique observations. '.format(column, len(data[column].unique()), len(data)))
-        display(data[columns][data[column].duplicated(keep = False)].sort_values(column))
+        #display(data[columns][data[column].duplicated(keep = False)].sort_values(column))
+
+def apply_log(data, columns):
+    data_log = data.copy()
+    for column in columns:
+        data_log[column] = np.log(data_log[column])
+    return data_log
+        

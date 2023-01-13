@@ -80,3 +80,17 @@ def seperate_dataframe(dataframe):
     df_categories = dataframe.select_dtypes('object')
     
     return df_numeric, df_categories
+
+def outliers_remove(dataframe, column):
+    """
+    Input: Dataframe, column's name (column)
+    
+    Take a dataframe and return a subset with the outlier removed from the given column name.
+    Default to removing 3 standard deviation away as outliers.
+    
+    Output: Dataframe
+    """
+    original = len(dataframe)
+    new_df = dataframe[abs(dataframe[column]) < dataframe[column].std()*3]
+    print('{} observations were removed. '.format(original - len(new_df)))
+    return new_df
