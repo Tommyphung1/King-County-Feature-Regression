@@ -39,15 +39,17 @@ def look_columns(data, columns):
     """
     if type(columns) != list:
         columns = [columns]
-    display(data[columns].head())
-    display(data[columns].info())
+
     for column in columns:
         if(len(data[column].unique()) == len(data)):
             print('{} has all unique observations. '.format(column))
         else:
             print('{} has {}/{} unique observations. '.format(column, len(data[column].unique()), len(data)))
-        #display(data[columns][data[column].duplicated(keep = False)].sort_values(column))
-
+        print(data[column].value_counts())
+        print('Number of missing values: {}'.format(data[column].isna().sum()))
+    
+    display(data[columns].head())
+    display(data[columns].info())
 def apply_log(data, columns):
     data_log = data.copy()
     for column in columns:

@@ -26,6 +26,8 @@ def check_and_drop(dataframe):
     
     Output: DataFrame
     """
+    print('Number of Missing Values: {}'.format(dataframe.isna().sum().values.sum()))
+          
     has_na = [column for column in dataframe.columns if dataframe[column].isna().sum() > 0]
     for column in has_na:
         if dataframe[column].isna().sum()/len(dataframe) > .5:
@@ -34,7 +36,16 @@ def check_and_drop(dataframe):
         else:
             print('Dropping rows: {}'.format(column))
             dataframe.dropna(subset= column, axis = 0, inplace= True )
-    display(dataframe.isna().sum())
+    
+    print('Number of Missing Values: {}'.format(dataframe.isna().sum().values.sum()))
+    
+    num = dataframe.duplicated().sum()
+    print('Number of duplicates: {}'.format(num))
+    
+    if dataframe.duplicated().sum() > 0:
+        dataframe.drop_duplicates(inplace = True)
+        print('Removed {} duplicates'.format(num - dataframe.duplicated().sum()))
+        print('Number of duplicates: {}'.format(dataframe.duplicated().sum()))
     return dataframe
     
 def correlation_with(dataframe, column):
