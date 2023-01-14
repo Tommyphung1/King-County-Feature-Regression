@@ -61,6 +61,7 @@ def create_model(dataframe, x_list, y):
     
     Output: Model, Results
     """
+    
     X = dataframe[x_list]
     y = dataframe[y]
     model = sm.OLS(y, sm.add_constant(X))
