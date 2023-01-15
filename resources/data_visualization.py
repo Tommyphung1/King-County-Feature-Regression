@@ -12,9 +12,9 @@ def plot_dataframe(data, x_list, y , size = (15,15), regression = False, results
     Output: Return the ax for plotting
     """
     index = 0
-    if len(x_list) == 1:
+    if len(x_list) == 1 or type(x_list) != list:
         fig, ax = plt.subplots();
-        data.plot.scatter(x_list[0], y, ax = ax, alpha = .5);
+        data.plot.scatter(x_list, y, ax = ax, alpha = .5);
         
     else:
         fig, ax = plt.subplots(len(x_list), figsize = size);
