@@ -8,4 +8,5 @@ Zillow is an online real estate website that help home owners to buy, sell and r
 **That reuslted in a relationship of a base cost of 260,974 and for every square foot, expected an increase in 355 which accounted for 36.2% of the variance** <br>
 **Model 2:** The second model added grade, which was the second highest correlation, along side square feet of living  <br>
 **The base cost of -626890 for any given house. For every square foot increase the price by $231 while for ever grade increased the price by $150702. The model explains 41.8% of the variance. 
-**Final Model:**  
+**Final Model V1:** 
+**Final Model V2:** 
