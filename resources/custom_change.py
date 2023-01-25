@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import statsmodels.api as sm
 
 def plot_dataframe(x, y, hline = False):
     """
@@ -116,3 +117,28 @@ def correlation_with(dataframe, column):
     best_pairs = sorted(best_pairs.items(), key = lambda x: x[1], reverse = True)
     
     return best_pairs
+
+def model_and_regression(X, y):
+    """
+    ____________________________________________________________________________________________________
+    Input: X (dataframe with independent variables as columns) - Dataframe
+           y (dataframe with dependent variable) - Dataframe
+    ____________________________________________________________________________________________________
+    Output: model (model of the given variables) - Model OLS 
+            result (result of the given model) - RegressionResult
+    ____________________________________________________________________________________________________
+    Take the input needed for modeling and return the model and results. 
+    Displays the summary and the partial regression if there are more than one variable given.
+    """
+    
+    model = sm.OLS(y, sm.add_constant(X))
+    result = model.fit()
+   
+    print(result.summary())
+    if len(X.columns) > 1:
+        ratio = (len(X.columns) % 2)
+        fig = plt.figure(figsize=(15,5*(1 + ratio)));
+        sm.graphics.plot_partregress_grid(result, exog_idx=list(X.columns), fig= fig);
+        plt.tight_layout();
+    
+    return model, result
