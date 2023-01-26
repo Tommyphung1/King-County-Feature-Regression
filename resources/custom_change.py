@@ -142,3 +142,20 @@ def model_and_regression(X, y):
         plt.tight_layout();
     
     return model, result
+
+def group_by_2_cat(dateframe, categories, operate):
+    """
+    ____________________________________________________________________________________________________
+    Input: dataframe (Dateframe with the given categories in them) - Dataframe
+           categories (list of column names) - list
+           operate (the column name to perform the mean by) - string
+    ____________________________________________________________________________________________________
+    Output: x_group (list version of the grouped up means) - List of lists
+    ____________________________________________________________________________________________________
+    Description: Take the dataframe and group them by each of the desired column mean. All of the category size need to be of size 2 for this verison
+    """
+    x_group = []
+    for cat in categories:
+        grouped = dateframe[[cat, operate]].groupby(cat).mean().values
+        x_group.append([value[0] for value in grouped.tolist()])
+    return x_group
