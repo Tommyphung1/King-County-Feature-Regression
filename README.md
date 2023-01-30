@@ -6,13 +6,13 @@
 [**Zillow**](https://www.zillow.com/) is an online real estate website that helps homeowners to buy, sell and rent homes.  The dataset from King Country House Sales was used to model the effect on price.  The dataset has multiple potential attributes of a house that would justify a higher house price while others are not as influential. <br>
 
 **Model 1:** The first model was modeled using square feet of living as the only parameter. <br>
-That resulted in a relationship of a base cost of 260,974 and for every square foot, expected an increase in 355 which accounted for **36.2%** of the variance. <br>
+That resulted in a relationship of a base cost of **260,974** and for every square foot, expected an increase in **355** which accounted for **36.2%** of the variance. <br>
 
 **Model 2:** The second model added grade, which was the second highest correlation, alongside square feet of living.  <br>
-The base cost of -626,890 for any given house. For every square foot increase the price by 231 while for every grade increased the price by $150702. The model explains **41.8%** of the variance. <br>
+The base cost of **-626,890** for any given house. For every square foot increase the price by **231** while for every grade increased the price by **150702**. The model explains **41.8%** of the variance. <br>
 
 **Model 3:** The third model adds the house age which was expected to lower the house price. <br>
-The base cost of -1,286,000 for any given house. For every square foot increase the price by 221 while for every grade increased the price by 216,400. For every year the house increase by 3867 due to age. The model explains **46.4%** of the variance.<br>
+The base cost of **-1,286,000** for any given house. For every square foot increase the price by **221** while for every grade increased the price by **216,400**. For every year the house increase by 3867 due to age. The model explains **46.4%** of the variance.<br>
 
 **Final Model V1:** The final model has most of the attributes of a house that proved to be linearly beneficial to price. Interaction terms were added as well with grade and square feet of living, the top two correlations to price. The model explains **50.1%** of the variance. <br>
 
@@ -20,6 +20,7 @@ The base cost of -1,286,000 for any given house. For every square foot increase 
 
 ## Business Understanding
 My client is **Zillow**, which helps buyers and sellers through their website with a list of all the available houses in a given area. A user can select preferences on houses to filter out there the desired house.  <br>
+
 Currently, houses are sold with the given information and priced based on the user's input. There are two ways to determine the price of a house on the website. First, there are past selling prices of the house which are publicly displayed to see. Second, Zillow has what is called Zestimate to give the user an idea of how the market price of the house.  The former doesn't take into consideration anything that the current home buyer could infer. To improve their system, models should be given and integrated if prove useful. 
 
 For **buyers**, it is particularly useful to determine if the house is reasonably priced before purchasing. Knowing what attributes increase or decrease a house's price may influence whether or not a desired detail is worth the price for it.  <br>
@@ -54,12 +55,12 @@ We will start with a simple regression model and the intercept-only model and wi
 ## Results
 
 ### Model 0: Intercept-Only Model
-The model is y = 982866 with y being the mean of house prices. Although the model is very simple, it does not take into account anything with the house attributes. There is also an uneven amount of houses above and below the price average that the model doesn't fit well. <br>
+The model is **y = 982866** with y being the mean of house prices. Although the model is very simple, it does not take into account anything with the house attributes. There is also an uneven amount of houses above and below the price average that the model doesn't fit well. <br>
 
 **There is a clear positive relationship that can perform better than the intercept-only model.** Some variables have high correlations that could prove useful. 
 
 ### Model 1: 
-**The given states that the starting cost of a house is $260,974 and for every square foot of living space a house has, the price increases by 356.** <br>
+**The given states that the starting cost of a house is 260,974 and for every square foot of living space a house has, the price increases by **356.** <br>
 
 Our first model can explain **36.2%** of the variance of price with the parameter, sqft_living. sqft_living is statistically significant having a p-value less than .05. <br>
 The single parameter performs well but we will try to see whether a combination of parameters can make the model better. Once the houses get too expensive or cheaper, the model becomes less accurate. This makes sense since the range in price and square feet varies greatly. 
@@ -67,7 +68,7 @@ The single parameter performs well but we will try to see whether a combination 
 **Recommendation:** Since this model only has one parameter, the larger the square foot is, the more the house increases. 
 
 ### Model 2:
-**The new model states that a price of a house starts at -626,900 and for every square foot of living increase the price by 231. Alternatively, for every grade a house has, the price is expected to increase by 150,700.** <br>
+**The new model states that a price of a house starts at **-626,900** and for every square foot of living increase the price by **231.** Alternatively, for every grade a house has, the price is expected to increase by 150,700.** <br>
 
 Our new model now explains **41.8%** of the variance of the price with sqft_living and grade. Both sqft_living and grade are statistically significant with p-values less than .05. <br> 
 This model makes sense since a house with nothing, living space or grade has no value which is why the constant is negative. Square feet affect the price but are not as high as the grade. Grade refers back to how the house well the house was built. The grade seems more impactful since they only range from 1-13 and both seem to positively affect the price of the house. 
@@ -96,7 +97,7 @@ Using this model, we can assume that the house has intrinsic value and loses tha
 
 The grade columns also follow a normal distribution so it stands to reason that higher than 7, the mean, would perform better than the others. When separated by their respective grades, grades 7, 8, and 9 have a positive relationship with a square foot of living, meaning that if a house has one of these grades, the bigger the house, the more expensive the house becomes. Inversely, the lower the grade, less than 7, decreases in price with every square foot. Furthermore, the model states that being a grade lower than 7 is expected to lose roughly 1,000,000 in price which balances out the high constant. 
 
-The other categorical parameters that were added and were statistically significant were ones that would make sense to make a house more expensive. Such as view, condition, and heat source. View for example was divided between an excellent view, no view, and everything in between. As expected, excellent view gave a 200,000 increase, followed by 50,000 with some type of view, and -60,000 for no view. This could correlate to the fact that half of all excellent views are also waterfront which had expected 188,000 on average to those that were not. 
+The other categorical parameters that were added and were statistically significant were ones that would make sense to make a house more expensive. Such as view, condition, and heat source. View for example was divided between an excellent view, no view, and everything in between. As expected, excellent view gave a 200,000 increase, followed by **50,000** with some type of view, and **-60,000** for no view. This could correlate to the fact that half of all excellent views are also waterfront which had expected **188,000** on average to those that were not. 
 
 ## Conclusion:
 The best-performing parameters are **square feet of living**, **grade** and **house age**. Depending on the grade, the square feet of living can have a positive or negative effect on price. Other categorical attributes like whether or not a house is on a waterfront or greenbelt have shown to have a positive effect on price while others such as **square feet of the garage have a negative effect.** 
