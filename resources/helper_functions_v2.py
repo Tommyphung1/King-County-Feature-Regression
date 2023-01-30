@@ -1,9 +1,12 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import statsmodels.api as sm
 
 def plot_dataframe(x, y, hline = False):
-
     """
     ____________________________________________________________________________________________________
-    Input: x (x axis data) - Dataframe or list-like array,
+    Input: x (x axis data) - Dataframe or list-like array
            y (y_axis data) - Dataframe or list-like array
            hline (default: False) - int or float
     ____________________________________________________________________________________________________
@@ -14,7 +17,7 @@ def plot_dataframe(x, y, hline = False):
                  If the data are not a Dataframe, generic labels are created in place. Will not except dataframes that have multiple columns. Ticks are evenly divided into 10 ticks and can be hard to interpret
                  
     """
-    if not (isinstance(x,pd.DataFrame) & isinstance(y,pd.DataFrame)):
+    if not (isinstance(x,pd.DataFrame) & isinstance(y,pd.DataFrame)):    ## Check if they are dataframes that has titles for the axises
         x_axis = 'Independent Variable'
         y_axis = 'Dependent Variable'
     else :
@@ -24,24 +27,23 @@ def plot_dataframe(x, y, hline = False):
             print('Invalid Data Inputs: X length = {}, Y length = {}'.format(len(x.columns,len(y.columns))))
 
 
-    fig, ax = plt.subplots(figsize = (7,5))
+    fig, ax = plt.subplots(figsize = (7,5))    ## Create the plots
 
     ax.scatter(x, y, alpha = .7, color = 'green');
     ax.set_ylabel(y_axis)
     ax.set_xlabel(x_axis)
 
     ax.set_title('{} vs {}'.format(x_axis, y_axis))
-    y_ticks = np.arange(0,round(y.max()), round(y.max())/10)
+    y_ticks = np.arange(0,3000000, 250000)
     y_ticks_str = ['${:,}'.format(y) for y in y_ticks]
     ax.set_yticks(y_ticks);
     ax.set_yticklabels(y_ticks_str);
 
-    if isinstance(hline, int) | (isinstance(hline, float)) :
+    if isinstance(hline, int) | (isinstance(hline, float)) :    ## If an integer was given, draw a line
         ax.axhline(hline, color = 'red', label = 'Intercept Only: y = {}'.format(round(hline)))
         ax.legend();
         
     return fig, ax
-
 
 
 def check_and_drop(dataframe):
@@ -51,8 +53,9 @@ def check_and_drop(dataframe):
     ____________________________________________________________________________________________________
     Output: dataframe (new dataframe) - Dataframe
     ____________________________________________________________________________________________________
-    Determine whether to remove rows or columns based on the number of missing values in the row or column
-    Return the new dateframe and display the action that it took
+    Description: Determine whether to remove rows or columns based on the number of missing values in the 
+    row or column. Return the new dateframe and display the action that it took
+    
     """
     print('Number of Missing Values: {}'.format(dataframe.isna().sum().values.sum()))
           
@@ -83,8 +86,9 @@ def outliers_remove(dataframe, column):
     Output: dataframe (new dataframe) - Dataframe
     ____________________________________________________________________________________________________
     
-    Take a dataframe and return a subset with the outlier removed from the given column name.
+    Description: Take a dataframe and return a subset with the outlier removed from the given column name.
     Default to removing 3 standard deviation away as outliers.
+    
     """
     if (isinstance(dataframe,pd.DataFrame)) & (isinstance(column,str)):
         original = len(dataframe)
@@ -103,10 +107,9 @@ def correlation_with(dataframe, column):
     ____________________________________________________________________________________________________      
     Output: best_pairs (Pairs of Correlations - Tuple
     ____________________________________________________________________________________________________
-    Return the correlation of a given column with all the columns.
+    Description: Return the correlation of a given column with all the columns.
     Make it sorted and readable to decide which column to use. 
-    Currently used for positive correlations 
-    
+    Currently used for positive correlations. 
     
     """
     df_cc = zip(dataframe.corrwith(dataframe[column]).index,dataframe.corrwith(dataframe[column]).values)
@@ -124,7 +127,7 @@ def model_and_regression(X, y):
     Output: model (model of the given variables) - Model OLS 
             result (result of the given model) - RegressionResult
     ____________________________________________________________________________________________________
-    Take the input needed for modeling and return the model and results. 
+    Description: Take the input needed for modeling and return the model and results. 
     Displays the summary and the partial regression if there are more than one variable given.
     """
     
@@ -133,8 +136,96 @@ def model_and_regression(X, y):
    
     print(result.summary())
     if len(X.columns) > 1:
-        fig, ax = plt.subplots(figsize=(15,5));
+        ratio = (len(X.columns) % 2)
+        fig = plt.figure(figsize=(15,5*(1 + ratio)));
         sm.graphics.plot_partregress_grid(result, exog_idx=list(X.columns), fig= fig);
         plt.tight_layout();
     
     return model, result
+
+def group_by_2_cat(dateframe, categories, operate):
+    """
+    ____________________________________________________________________________________________________
+    Input: dataframe (Dateframe with the given categories in them) - Dataframe
+           categories (list of column names) - list
+           operate (the column name to perform the mean by) - string
+    ____________________________________________________________________________________________________
+    Output: x_group (list version of the grouped up means) - List of lists
+    ____________________________________________________________________________________________________
+    Description: Take the dataframe and group them by each of the desired column mean. 
+    All of the category size need to be of size 2 for this verison
+    """
+    x_group = []
+    for cat in categories:
+        grouped = dateframe[[cat, operate]].groupby(cat).mean().values
+        x_group.append([value[0] for value in grouped.tolist()])
+    return x_group
+
+
+def look_dataframe(data):
+    """
+    ____________________________________________________________________________________________________
+    Input: data (Dataframe of the data) - Dataframe 
+    ____________________________________________________________________________________________________
+    Output: None
+    ____________________________________________________________________________________________________
+    Description: Operate the data with basic information 
+    Check for duplicates and missing values and print them if found
+    
+    """
+    display(data.head())
+    print('Column Names:', list(data.columns))
+    print('Number of observation:', len(data.index))
+    
+    if True in data.duplicated().value_counts().keys():
+        print('Duplicates detected')
+        display(data[data.duplicated(keep= False)])
+    
+    results = data.isna().any()
+    if True in results.values:
+        print('N/A detected')
+        print('Columns with NaN: ', list(results[results.values == True].index))
+        
+def look_columns(data, columns):
+    """
+    ____________________________________________________________________________________________________
+    Input: DataFrame Series
+    ____________________________________________________________________________________________________
+    Output: None
+    ____________________________________________________________________________________________________
+    Description: Display columns information and print how many unique observations
+    """
+    if type(columns) != list:
+        columns = [columns]
+
+    for column in columns:
+        if(len(data[column].unique()) == len(data)):
+            print('{} has all unique observations. '.format(column))
+        else:
+            print('{} has {}/{} unique observations. '.format(column, len(data[column].unique()), len(data)))
+        print(data[column].value_counts())
+        print('Number of missing values: {}'.format(data[column].isna().sum()))
+    
+    display(data[columns].head())
+    display(data[columns].info())
+    
+    
+def create_model(dataframe, x_list, y):
+    """
+    ____________________________________________________________________________________________________
+    Input: Dataframe (working dateframe)- dataframe, 
+           x_list (list of independent variables) - list,
+           y (dependent variable) - string
+    ____________________________________________________________________________________________________
+    Output: Model, Results
+    ____________________________________________________________________________________________________
+
+    Description: Create a model from the dataframe with the given variable names only and return the model and the results
+    """
+    
+    X = dataframe[x_list]
+    y = dataframe[y]
+    model = sm.OLS(y, sm.add_constant(X))
+    results = model.fit()
+
+    return model, results
