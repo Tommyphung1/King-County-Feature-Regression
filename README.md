@@ -121,14 +121,18 @@ Without them, the constant would be negative which in this case would make sense
 Finding correlating parameters can lead to an accurate model and should be added if possible.  
 
 ## Next Steps
-1. **More Interaction Terms** <br>
++ **More Interaction Terms** <br>
 The model only has interaction terms with a square foot of living and grade since they were the most correlating parameters to price. There could be other useful interaction terms to be added but wouldn't be obvious to add. 
-2. **Added more outside interactions** <br>
++ **Added more outside interactions** <br>
 Based on the categorical datatypes, the outside environment has a strong effect on the house price. Adding more of these attributes could lead to more linear relationships that could benefit the model. These could be hard to track as the houses span through many years and the environment changes often. 
-3. **Current Economic Status** <br>
++ **Current Economic Status** <br>
 For the past 3 years, we lived through a pandemic and that could affect house prices. There have been other events that could prove useful to know. Knowing the value of the dollar or inflation rate during the time could give more insight into how buyers and seller value their money.
 
+## For More Information
 
+Please review our full analysis in [Jupyter Notebook](./house_notebook.ipynb) or the [presentation](./presentation_2.pdf).
+
+For any additional questions, please contact **Tommy Phung, phungtommy109@gmail.com**
 
 ## Repository Structure
 
