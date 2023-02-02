@@ -55,15 +55,16 @@ We will start with a simple regression model and the intercept-only model and wi
 ## Results
 
 ### Model 0: Intercept-Only Model
-![Intercept_Only Model](pictures/Baseline model Int Only.JPG)
+![Intercept_Only Model](https://github.com/Tommyphung1/Project-2/blob/afdfdebeca1a409088c409d2b35b210a1a417f30/pictures/Baseline%20model%20Int%20Only.JPG)) <br>
 
 The model is **y = 982866** with y being the mean of house prices. Although the model is very simple, it does not take into account anything with the house attributes. There is also an uneven amount of houses above and below the price average that the model doesn't fit well. <br>
 
 **There is a clear positive relationship that can perform better than the intercept-only model.** Some variables have high correlations that could prove useful. 
 
 ### Model 1: 
-![Intercept_Only Model](pictures/Baseline model Int Only.JPG)
-**The given states that the starting cost of a house is 260,974 and for every square foot of living space a house has, the price increases by **356.** <br>
+![Intercept_Only Model](https://github.com/Tommyphung1/Project-2/blob/afdfdebeca1a409088c409d2b35b210a1a417f30/pictures/First%20Model%20Graph.JPG) <br>
+
+**The given states that the starting cost of a house is 260,974 and for every square foot of living space a house has, the price increases by 356.** <br>
 
 Our first model can explain **36.2%** of the variance of price with the parameter, sqft_living. sqft_living is statistically significant having a p-value less than .05. <br>
 The single parameter performs well but we will try to see whether a combination of parameters can make the model better. Once the houses get too expensive or cheaper, the model becomes less accurate. This makes sense since the range in price and square feet varies greatly. 
@@ -71,7 +72,7 @@ The single parameter performs well but we will try to see whether a combination 
 **Recommendation:** Since this model only has one parameter, the larger the square foot is, the more the house increases. 
 
 ### Model 2:
-![Square Living Model](pictures/Mode 2 Regression QQPlot.JPG)
+![Square Living Model](https://github.com/Tommyphung1/Project-2/blob/afdfdebeca1a409088c409d2b35b210a1a417f30/pictures/Mode%202%20Regression%20QQPlot.JPG) <br>
 **The new model states that a price of a house starts at **-626,900** and for every square foot of living increase the price by **231.** Alternatively, for every grade a house has, the price is expected to increase by 150,700.** <br>
 
 Our new model now explains **41.8%** of the variance of the price with sqft_living and grade. Both sqft_living and grade are statistically significant with p-values less than .05. <br> 
@@ -81,7 +82,7 @@ This model makes sense since a house with nothing, living space or grade has no 
 
 Grades can be broken down into their specific grade and we can see the individual effects of grades.
 ### Model 3:
-![House Age Model](pictures/House Age Model 3.JPG)
+![House Age Model](https://github.com/Tommyphung1/Project-2/blob/afdfdebeca1a409088c409d2b35b210a1a417f30/pictures/House%20Age%20Model%203.JPG) <br>
 **The third model states that a price of a house starts at -1,286,000 and for every square foot of living increase the price by 221. Alternatively, for every grade a house has, the price is expected to increase by 216,400. The house price also increases by 3867 for the house age.** <br>
 
 Our new model now explains **46.4%** of the variance of the price with sqft_living, grade, and house age. All of the parameters are statistically significant with p-values less than .05. <br> 
@@ -90,7 +91,7 @@ The house starts with a negative price with each parameter increasing the house 
 **Recommendation:** When using this model, the large negative constant need to be balanced by the grade as the model 2. Square foot of living is still a positive parameter so that remains true. The extra parameter of house age tells us that older houses are expected to increase in price. This could be due to inflation in price as well as how house prices trend to increase rather than decrease when other factors are not considered. From these models, all of their parameters don't change except for age which sellers have no control over. The seller can infer that if nothing changes with the house, the price increase 3866 a year. Although the value can add up the older the house becomes, it is not nearly high enough when prices are in the hundreds of thousands. 
 
 ### Final Model V1:
-![Final Model](pictures/Final Model Regressin Plots.JPG)
+![Final Model](https://github.com/Tommyphung1/Project-2/blob/afdfdebeca1a409088c409d2b35b210a1a417f30/pictures/Final%20Model%20Regressin%20Plots.JPG) <br>
 The 'best' model would include every single parameter of a house and add as many interaction terms as possible. The final model has a low starting value of 1.5 with the majority of the cost being its grade, in a greenbelt, and the view available. Most of the variables have a positive benefit to price while lower grade, condition, and view lowered it. Not all parameters are statistically significant such as the square foot of living, enough that it had the best correlation. 
 
 This model could explain **50.1%** of the variance.  To make it a little manageable, I only added attributes that appear to have a linear relationship with price and excluded inconclusive data in the next model. 
