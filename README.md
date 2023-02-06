@@ -38,16 +38,19 @@ Using dummy variables, we can model the continuous variables with the categorica
 
 Although we would like to use all of the available data, that is simpling not easy to model so some variables are excluded. Some variables such as ID, address, latitude, and longitude are excluded since they should have any influence on price. The following were the columns in the dataset to consider and the ones that were removed. 
 
-**Continuous Datatype:** <br>
-'sqft_living', 'sqft_lot', 'sqft_above', 'sqft_basement', 'sqft_garage', 'sqft_patio' <br>
-**Categorical Datatype:** <br>
-'bedrooms', 'bathrooms', 'floors', 'waterfront', 'greenbelt', 'nuisance', 'condition', 'view', 'grade', 'heat_source', 'sewer_system' <br>
-**Unused Attributes:** <br>
-'date', 'id', 'lat', 'long', 'address'<br>
-
-*After exploring the dataset, I decided to remove these attributes for the following reason.* <br>
-**sqft_above** - Similar or identical to sqft_living <br>
-**nuisance** - Evenly split with relatively little difference if a house has a nuisance or doesn't have a nuisance <br>
+| Continuous    | Categorical  | Unused  | Removed    |
+|---------------|--------------|---------|------------|
+| sqft_living   | bedrooms     | date    | sqft_above |
+| sqft_lot      | bathrooms    | id      | nuisance   |
+| sqft_above    | floors       | lat     |            |
+| sqft_basement | waterfront   | long    |            |
+| sqft_garage   | greenbelt    | address |            |
+| sqft_patio    | nuisance     |         |            |
+|               | condition    |         |            |
+|               | view         |         |            |
+|               | grade        |         |            |
+|               | heat_source  |         |            |
+|               | sewer_system |         |            |
 
 ## Method
 We will start with a simple regression model and the intercept-only model and will progressively adding parameter to see if the model improves. Data need to be cleaned and based on the data type needs to be prepped for modeling. Categorical data needs dummy variables inorder to properly model. yr_built was changed to house_age by subtracting to the newest year which was 2022. Interaction terms were added to see if the two parameter were interacting with one anohter and added to the model. Each model is graphed to see if the parital regression shows a positive or negative relationship. 
@@ -104,6 +107,9 @@ Using this model, we can assume that the house has intrinsic value and loses tha
 The grade columns also follow a normal distribution so it stands to reason that higher than 7, the mean, would perform better than the others. When separated by their respective grades, grades 7, 8, and 9 have a positive relationship with a square foot of living, meaning that if a house has one of these grades, the bigger the house, the more expensive the house becomes. Inversely, the lower the grade, less than 7, decreases in price with every square foot. Furthermore, the model states that being a grade lower than 7 is expected to lose roughly 1,000,000 in price which balances out the high constant. 
 
 The other categorical parameters that were added and were statistically significant were ones that would make sense to make a house more expensive. Such as view, condition, and heat source. View for example was divided between an excellent view, no view, and everything in between. As expected, excellent view gave a 200,000 increase, followed by **50,000** with some type of view, and **-60,000** for no view. This could correlate to the fact that half of all excellent views are also waterfront which had expected **188,000** on average to those that were not. 
+
+**All coefficients are statically significant of having a linear relationship with a p-value less than .05.** Grades 3, 4, and 5 were added to the model with greater than .05 p-value due to their interaction terms being statically significant. <br>
+**With a p-value of less than .05, the model proves to be better than the baseline model.**
 
 ## Conclusion:
 The best-performing parameters are **square feet of living**, **grade** and **house age**. Depending on the grade, the square feet of living can have a positive or negative effect on price. Other categorical attributes like whether or not a house is on a waterfront or greenbelt have shown to have a positive effect on price while others such as **square feet of the garage have a negative effect.** 
